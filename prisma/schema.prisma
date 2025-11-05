@@ -95,7 +95,7 @@ model BlogUser {
   updatedAt DateTime @updatedAt
   blog      Blog?    @relation(fields: [blogId], references: [id])
   blogId    String?
-  User      User?    @relation(fields: [userId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id])
   userId    String?
 
   @@map("blog_users")
