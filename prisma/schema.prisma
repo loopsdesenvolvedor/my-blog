@@ -2,27 +2,28 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
- 
+
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
 }
- 
+
 model User {
-  id            String          @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  username      String?         @unique
-  email         String?         @unique
+  username      String?    @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
+  blogUser      BlogUser[]
+  post          Post[]
 
- 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
- 
+
 model Account {
   id                       String  @id @default(cuid())
   userId                   String  @unique
@@ -38,32 +39,90 @@ model Account {
   session_state            String?
   refresh_token_expires_in Int?
   user                     User?   @relation(fields: [userId], references: [id])
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
- 
+
   @@unique([provider, providerAccountId])
   @@index([userId])
 }
- 
+
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id])
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
- 
+
   @@index([userId])
 }
- 
+
 model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@unique([identifier, token])
 }
- 
+
+model Blog {
+  id        String  @id @default(cuid())
+  title     String  @db.VarChar(60)
+  subtitle  String? @db.VarChar(191)
+  slug      String  @db.VarChar(60)
+  bgColor   String  @default("#ffffff") @db.VarChar(45)
+  textColor String  @default("#000000") @db.VarChar(45)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  users BlogUser[]
+  posts Post[]
+
+  @@unique([slug])
+  @@map("blogs")
+}
+
+model BlogUser {
+  id   String @id @default(cuid())
+  role Role   @default(AUTHOR)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  blog      Blog?    @relation(fields: [blogId], references: [id])
+  blogId    String?
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+
+  @@map("blog_users")
+}
+
+model Post {
+  id       String  @id @default(cuid())
+  title    String  @db.VarChar(100)
+  subtitle String? @db.VarChar(100)
+  slug     String  @db.VarChar(60)
+  body     String  @db.Text
+  blog     Blog?   @relation(fields: [blogId], references: [id])
+  blogId   String?
+  User     User?   @relation(fields: [userId], references: [id])
+  userId   String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  @@unique([slug])
+  @@map("blog_posts")
+}
+
+enum Role {
+  OWNER
+  AUTHOR
+  ADMIN
+  EDITOR
+}
