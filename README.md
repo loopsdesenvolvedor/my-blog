@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Blog Moderno com Next.js, Prisma e NextAuth v5
 
-## Getting Started
+Um blog fullstack desenvolvido com **Next.js 16**, **TypeScript**, **Prisma**, **Zustand**, e **NextAuth v5 (beta)** com autenticação via **Google** e **link mágico (Nodemailer)**.  
+O projeto também possui **internacionalização com `next-intl`**, **tema dinâmico com Tailwind v5**, e um editor de texto rico com **React Quill**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Tecnologias
+
+| Categoria | Tecnologias |
+|------------|--------------|
+| **Frontend** | Next.js 16 • React 19 • TypeScript • Tailwind CSS 4/5 • Ant Design 5 |
+| **Autenticação** | NextAuth v5 (beta) • Google Provider • Magic Link (Nodemailer) |
+| **Banco de Dados** | Prisma ORM • MySQL
+| **Gerenciamento de Estado** | Zustand |
+| **Internacionalização (i18n)** | next-intl |
+| **Outros** | Axios • React Quill (Editor de texto) • Day.js |
+
+---
+
+## Estrutura do Projeto
+
+```
+src/
+├─ app/ # Rotas do Next.js (App Router)
+│ ├─ [locale]/ # Páginas específicas de idioma (next-intl)
+│ ├─ api/ # Rotas da API (NextAuth, etc.)
+├─ components/ # Componentes reutilizáveis
+├─ hooks/ # Hooks customizados (ex: useTheme)
+├─ store/ # Zustand stores (ex: themeStore)
+├─ libs/ # Configurações auxiliares (ex: prisma, auth)
+├─ langs/ # Arquivos de tradução JSON (en.json, pt.json, etc.)
+├─ prisma/ # Esquema e migrações
+└─ styles/ # CSS global e temas
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Funcionalidades
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Login via Google ou Link Mágico (email)
+- Sistema de usuários com perfis
+- CRUD de posts com editor de texto rico
+- Tema dinâmico (light/dark) usando Zustand e Tailwind `@theme inline`
+- Internacionalização com **next-intl**
+- Prisma com extensão Accelerate para otimização
+- Envio de emails via **Nodemailer**
+- Estrutura modular e tipada com TypeScript
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Estrutura do Projeto
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Configuração e Execução
 
-## Deploy on Vercel
+### 1. Clone o repositório
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+git clone https://github.com/seu-usuario/my-blog.git
+cd my-blog
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+
+## Configure as variáveis de ambiente
+
+DATABASE_URL="file:./dev.db"
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=uma_chave_segura_aqui
+
+# Google Auth
+AUTH_GOOGLE_ID=seu_client_id
+AUTH_GOOGLE_SECRET=seu_client_secret
+
+# Magic Link (Nodemailer)
+EMAIL_SERVER_HOST=smtp.gmail.com
+EMAIL_SERVER_PORT=587
+EMAIL_SERVER_USER=seuemail@gmail.com
+EMAIL_SERVER_PASSWORD=sua_senha_ou_app_password
+EMAIL_FROM="Seu Nome <seuemail@gmail.com>"
+
+## Gere um banco de dados 
+npx prisma migrate dev
+
+## Inicie o servidor 
+npm run dev e acesso no endereço: http://localhost:3000
