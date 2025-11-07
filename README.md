@@ -11,7 +11,7 @@ O projeto também possui **internacionalização com `next-intl`**, **tema dinâ
 |------------|--------------|
 | **Frontend** | Next.js 16 • React 19 • TypeScript • Tailwind CSS 4/5 • Ant Design 5 |
 | **Autenticação** | NextAuth v5 (beta) • Google Provider • Magic Link (Nodemailer) |
-| **Banco de Dados** | Prisma ORM • PostgreSQL / MySQL / SQLite (configurável) |
+| **Banco de Dados** | Prisma ORM • MySQL
 | **Gerenciamento de Estado** | Zustand |
 | **Internacionalização (i18n)** | next-intl |
 | **Outros** | Axios • React Quill (Editor de texto) • Day.js |
