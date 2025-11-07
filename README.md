@@ -19,6 +19,8 @@ O projeto também possui **internacionalização com `next-intl`**, **tema dinâ
 ---
 
 ## Estrutura do Projeto
+
+```
 src/
 ├─ app/ # Rotas do Next.js (App Router)
 │ ├─ [locale]/ # Páginas específicas de idioma (next-intl)
@@ -30,6 +32,8 @@ src/
 ├─ langs/ # Arquivos de tradução JSON (en.json, pt.json, etc.)
 ├─ prisma/ # Esquema e migrações
 └─ styles/ # CSS global e temas
+
+```
 
 
 ## Funcionalidades
