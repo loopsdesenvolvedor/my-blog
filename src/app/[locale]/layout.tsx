@@ -5,6 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
+import Provider from "./provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,7 @@ export default async function RootLayout({
     <html lang={locale}>
       <body className="antialiased">
         <NextIntlClientProvider locale={locale}>
-          {children}
+          <Provider>{children}</Provider>
         </NextIntlClientProvider>
       </body>
     </html>
